@@ -1,0 +1,30 @@
+
+GET http://localhost:3000/cocktails 
+
+###
+
+GET http://localhost:3000/cocktails/3
+
+###
+POST  http://localhost:3000/cocktails
+content-type: application/json
+
+{
+   "name": "Blue Lagoon",
+   "description": "A vibrant and refreshing cocktail reminiscent of a tropical paradise, featuring blue curaçao, vodka, and lemonade.",
+    "ingredients": "1.5 oz vodka, 1 oz blue curaçao, 4 oz lemonade, Lemon slice for garnish, Ice cubes",
+    "category_id": 1
+  } 
+
+###
+
+DELETE http://localhost:3000/cocktails/19
+
+###
+
+PATCH http://localhost:3000/cocktails/20
+content-type: application/json
+
+{
+   "name": "Blue ✌️"
+} 
