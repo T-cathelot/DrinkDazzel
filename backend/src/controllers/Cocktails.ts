@@ -42,18 +42,9 @@ export class CocktailsController extends Controller {
       const newCocktail = new Cocktail();
       newCocktail.description = req.body.description;
       newCocktail.name = req.body.name;
-      newCocktail.category = req.body.categoryId;
-      newCocktail.tags = req.body.tagsId;
+      newCocktail.category = req.body.category;
+      newCocktail.tags = req.body.tags;
       newCocktail.ingredients = req.body.ingredients;
-
-      const tagIds: number[] = req.body.tagsId;
-      const tags = await Tag.find({
-        where: {
-          id: In(tagIds),
-        },
-      });
-
-      newCocktail.tags = tags;
 
       const errors = await validate(newCocktail);
       if (errors.length === 0) {
