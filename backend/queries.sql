@@ -15,7 +15,7 @@ CREATE TABLE category (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name VARCHAR(255)
 )
-INSERT INTO cocktail (id, name, description, ingredients, category_id) VALUES
+INSERT INTO cocktail (id, name, description, ingredients, categoryId) VALUES
 (1, 'Mojito', 'Un cocktail rafraîchissant à base de rhum blanc, jus de citron vert, feuilles de menthe, sucre, et eau gazeuse.', '2 oz de rhum blanc, 1 oz de jus de citron vert, 2 cuillères à café de sucre, 6 à 8 feuilles de menthe fraîche, Eau gazeuse', 1),
 (2, 'Cosmopolitan', 'Un cocktail classique à base de vodka, jus de canneberge, triple sec, et jus de citron vert frais.', '1,5 oz de vodka, 1 oz de jus de canneberge, 0,5 oz de triple sec, 0,5 oz de jus de citron vert frais', 1),
 (3, 'Margarita', 'Un cocktail mexicain populaire à base de tequila, jus de citron vert, et triple sec, servi avec du sel sur le bord du verre.', '2 oz de tequila, 1 oz de jus de citron vert, 0,5 oz de triple sec, Sel pour le bord du verre', 1),
@@ -53,6 +53,10 @@ WHERE  category.name='Virgin'
 
 SELECT COUNT(*) AS nb FROM cocktail
 WHERE ingredients LIKE '%soda%'
+
+SELECT * FROM cocktail 
+JOIN  category ON cocktail.categoryId = category.id 
+WHERE category.name = 'Virgin'
 
 DELETE FROM cocktail WHERE name LIKE '%Lagoon%'
 
