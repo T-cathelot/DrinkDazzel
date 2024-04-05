@@ -1,0 +1,31 @@
+#tags part
+
+GET http://localhost:3000/tags
+
+###
+
+GET http://localhost:3000/tags/2
+
+###
+
+POST  http://localhost:3000/tags
+content-type: application/json
+
+{
+   "name": "Rum"
+  } 
+
+###
+
+DELETE http://localhost:3000/tags/1
+
+###
+
+PATCH http://localhost:3000/tags/1
+content-type: application/json
+
+{
+   "name": "Original"
+} 
+
+###
