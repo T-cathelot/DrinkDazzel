@@ -30,6 +30,6 @@ export class Cocktail extends BaseEntity {
   category!: Category;
 
   @ManyToMany(() => Tag, (tag) => tag.cocktails)
-  @JoinTable()
+  @JoinTable({ name: "Cocktails_by_Tags" })
   tags!: Tag[];
 }

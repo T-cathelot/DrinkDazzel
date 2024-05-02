@@ -20,8 +20,8 @@ content-type: application/json
    "name": "Blue Lagoon 🌊",
    "description": "A vibrant and refreshing cocktail reminiscent of a tropical paradise, featuring blue curaçao, vodka, and lemonade.",
     "ingredients": "1.5 oz vodka, 1 oz blue curaçao, 4 oz lemonade, Lemon slice for garnish, Ice cubes",
-    "categoryId": 2,
-   "tagsId": [ 1, 2 ,3]
+    "category": {"id" : 2},
+   "tags": [{"id" : 1},{"id" : 2} ]
   } 
 
 ###
