@@ -2,35 +2,35 @@
 
 
 # # search request
-# GET http://localhost:3000/cocktails/search?search=Blue
+# GET http://localhost:5000/cocktails/search?search=Blue
 ###
 
 
-GET http://localhost:3000/cocktails 
+GET http://localhost:5000/cocktails 
 ###
 
 
-GET http://localhost:3000/cocktails/2
+GET http://localhost:5000/cocktails/2
 
 ###
-POST  http://localhost:3000/cocktails
+POST  http://localhost:5000/cocktails
 content-type: application/json
 
 {
-   "name": "Blue Lagoon 🌊",
+   "name": "Blue Lago(y(on 🌊",
    "description": "A vibrant and refreshing cocktail reminiscent of a tropical paradise, featuring blue curaçao, vodka, and lemonade.",
     "ingredients": "1.5 oz vodka, 1 oz blue curaçao, 4 oz lemonade, Lemon slice for garnish, Ice cubes",
-    "category": {"id" : 2},
+    "category": {"id" : 8},
    "tags": [{"id" : 1},{"id" : 2} ]
   } 
 
 ###
 
-DELETE http://localhost:3000/cocktails/23
+DELETE http://localhost:5000/cocktails/26
 
 ###
 
-PATCH http://localhost:3000/cocktails/7
+PATCH http://localhost:5000/cocktails/7
 content-type: application/json
 
 {

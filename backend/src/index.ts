@@ -4,18 +4,35 @@ import { dataSource } from "./datasource";
 import { CocktailsController } from "./controllers/Cocktails";
 import { CategoriesController } from "./controllers/Categories";
 import { TagsController } from "./controllers/Tags";
+import cors from "cors";
 
 const app = express();
-const port = 3000;
+const port = 5000;
 app.use(express.json());
+app.use(cors());
+
+const asyncController = (controller: Function) => {
+  return async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    try {
+      await controller(req, res, next);
+    } catch (err) {
+      console.log(err, "Backend Error");
+      res.status(500).send;
+    }
+  };
+};
 
 const cocktailsController = new CocktailsController();
-app.get("/cocktails", cocktailsController.getAll);
-app.get("/cocktails/:id", cocktailsController.getOne);
-app.post("/cocktails", cocktailsController.createOne);
-app.delete("/cocktails/:id", cocktailsController.deleteOne);
-app.patch("/cocktails/:id", cocktailsController.patchOne);
-app.put("/cocktails/:id", cocktailsController.updateOne);
+app.get("/cocktails", asyncController(cocktailsController.getAll));
+app.get("/cocktails/:id", asyncController(cocktailsController.getOne));
+app.post("/cocktails", asyncController(cocktailsController.createOne));
+app.delete("/cocktails/:id", asyncController(cocktailsController.deleteOne));
+app.patch("/cocktails/:id", asyncController(cocktailsController.patchOne));
+app.put("/cocktails/:id", asyncController(cocktailsController.updateOne));
 
 const categoriesController = new CategoriesController();
 app.get("/categories", categoriesController.getAll);
@@ -32,6 +49,18 @@ app.post("/tags", tagsController.createOne);
 app.delete("/tags/:id", tagsController.deleteOne);
 app.patch("/tags/:id", tagsController.patchOne);
 app.put("/tags/:id", tagsController.updateOne);
+
+// app.use(
+//   (
+//     err: any,
+//     req: express.Request,
+//     res: express.Response,
+//     next: express.NextFunction
+//   ) => {
+//     console.error(err.stack);
+//     res.status(500).send("Something broke!");
+//   }
+// );
 
 app.listen(port, async () => {
   const time = new Date().toString();
