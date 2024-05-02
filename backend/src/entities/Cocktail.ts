@@ -26,6 +26,9 @@ export class Cocktail extends BaseEntity {
   @Column({ length: 100 })
   ingredients!: string;
 
+  @Column({ length: 100 })
+  imgUrl!: string;
+
   @ManyToOne(() => Category, (category) => category.cocktail)
   category!: Category;
 

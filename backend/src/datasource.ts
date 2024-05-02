@@ -5,7 +5,7 @@ import { Tag } from "./entities/Tag";
 
 export const dataSource = new DataSource({
   type: "sqlite",
-  database: "./ShakeShare.sqlite",
+  database: "./DrinkDazzle.sqlite",
   entities: [Category, Cocktail, Tag],
   synchronize: true,
   logging: true,
