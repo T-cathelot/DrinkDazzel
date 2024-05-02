@@ -1,3 +1,16 @@
+
+## Run frontend :
+cd frontend
+npm run dev
+
+## Run backend :
+cd backend 
+npm start
+
+For a firt look you can run queries in queries.sql and already get somme data.
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
