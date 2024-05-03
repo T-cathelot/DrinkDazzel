@@ -1,41 +1,22 @@
 import * as React from "react";
-import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import IconButton from "@mui/material/IconButton";
 import InfoIcon from "@mui/icons-material/Info";
-
-export type CocktailProps = {
-  id: number;
-  link: string;
-  imgUrl: string;
-  name: string;
-  description: string;
-  ingredients: string;
-  tags: TagArray[];
-  category: categoryType;
-};
-
-export type TagArray = {
-  id: number;
-  name: string;
-};
-
-type categoryType = {
-  name: string;
-};
+import { CocktailProps } from "../../types/cocktailsTypes";
+import { categoryType } from "../../types/categoriesTypes";
+import { TagArray } from "../../types/tagsTypes";
 
 export type cocktailType = TagArray & CocktailProps & categoryType;
 
 export default function CocktailCard(props: CocktailProps) {
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
-  };
-
   return (
-    <ImageList sx={{ width: 800 }} cols={3}>
-      <ImageListItem key="Subheader" cols={4}></ImageListItem>
-      <ImageListItem key={props.id} sx={{ boxShadow: 6, borderRadius: 8 }}>
+    <>
+      <ImageListItem key="Subheader" cols={1}></ImageListItem>
+      <ImageListItem
+        key={props.id}
+        sx={{ boxShadow: 6, borderRadius: 8, maxWidth: "250px" }}
+      >
         <img
           srcSet={`${props.imgUrl}`}
           src={`${props.imgUrl}`}
@@ -71,6 +52,6 @@ export default function CocktailCard(props: CocktailProps) {
           }
         />
       </ImageListItem>
-    </ImageList>
+    </>
   );
 }
