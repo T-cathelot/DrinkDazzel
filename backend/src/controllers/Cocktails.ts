@@ -16,6 +16,28 @@ export class CocktailsController extends Controller {
     res.send(cocktails);
   };
 
+  getByTags = async (req: Request, res: Response) => {
+    const tagId = Number(req.params.id);
+    console.log(tagId, " tagId console.log() backend");
+    try {
+      const cocktails = await Cocktail.find({
+        relations: { tags: true },
+        where: { tags: { id: tagId } },
+      });
+      res.send(cocktails);
+    } catch (error) {
+      console.error(
+        "Une erreur s'est produite lors de la récupération des cocktails par tag :",
+        error
+      );
+      res
+        .status(500)
+        .send(
+          "Une erreur s'est produite lors de la récupération des cocktails par tag"
+        );
+    }
+  };
+
   getOne = async (req: Request, res: Response) => {
     const cocktail = await Cocktail.findOne({
       where: { id: Number(req.params.id) },

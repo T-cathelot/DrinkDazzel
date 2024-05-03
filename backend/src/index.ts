@@ -29,6 +29,7 @@ const asyncController = (controller: Function) => {
 const cocktailsController = new CocktailsController();
 app.get("/cocktails", asyncController(cocktailsController.getAll));
 app.get("/cocktails/:id", asyncController(cocktailsController.getOne));
+app.get("/cocktails/byTag/:id", asyncController(cocktailsController.getByTags));
 app.post("/cocktails", asyncController(cocktailsController.createOne));
 app.delete("/cocktails/:id", asyncController(cocktailsController.deleteOne));
 app.patch("/cocktails/:id", asyncController(cocktailsController.patchOne));
