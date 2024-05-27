@@ -2,21 +2,35 @@ import {
   BaseEntity,
   Column,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from "typeorm";
+import { Length, Min } from "class-validator";
+import { Field, ID, InputType, ObjectType } from "type-graphql";
 import { Cocktail } from "./Cocktail";
-import { Length } from "class-validator";
 
 @Entity()
+@ObjectType()
 export class Category extends BaseEntity {
   @PrimaryGeneratedColumn()
+  @Field(() => ID)
   id!: number;
-
-  @Column({ length: 100 })
-  @Length(5, 100)
+  @Column()
+  @Length(5, 20)
+  @Field()
   name!: string;
 
-  @OneToMany(() => Cocktail, (cocktail) => cocktail.category)
+  @Column({ nullable: true })
+  @Field()
+  link!: string;
+
+  @OneToMany(() => Cocktail, (cocktail) => cocktail.categories)
+  @Field(() => [Cocktail])
   cocktail!: Cocktail[];
+}
+
+@InputType()
+export class CategoryCreateInput extends BaseEntity {
+  @Field()
+  name!: string;
 }
