@@ -1,71 +1,58 @@
 import "reflect-metadata";
-import express from "express";
 import { dataSource } from "./datasource";
-import { CocktailsController } from "./controllers/Cocktails";
-import { CategoriesController } from "./controllers/Categories";
-import { TagsController } from "./controllers/Tags";
 import cors from "cors";
+import { buildSchema } from "type-graphql";
+import { TagsResolver } from "./resolvers/Tags";
+import { ApolloServer } from "@apollo/server";
+import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import { CocktailResolver } from "./resolvers/Cocktails";
+import { CategoryResolver } from "./resolvers/Categories";
+import express from "express";
+import http from "http";
+import { expressMiddleware } from "@apollo/server/express4";
 
-const app = express();
-const port = 5000;
-app.use(express.json());
-app.use(cors());
-
-const asyncController = (controller: Function) => {
-  return async (
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
-    try {
-      await controller(req, res, next);
-    } catch (err) {
-      console.log(err, "Backend Error");
-      res.status(500).send;
-    }
-  };
+export type ContextType = {
+  req: any;
+  res: any;
+  // user?: User;
 };
 
-const cocktailsController = new CocktailsController();
-app.get("/cocktails", asyncController(cocktailsController.getAll));
-app.get("/cocktails/:id", asyncController(cocktailsController.getOne));
-app.get("/cocktails/byTag/:id", asyncController(cocktailsController.getByTags));
-app.post("/cocktails", asyncController(cocktailsController.createOne));
-app.delete("/cocktails/:id", asyncController(cocktailsController.deleteOne));
-app.patch("/cocktails/:id", asyncController(cocktailsController.patchOne));
-app.put("/cocktails/:id", asyncController(cocktailsController.updateOne));
-
-const categoriesController = new CategoriesController();
-app.get("/categories", categoriesController.getAll);
-app.get("/categories/:id", categoriesController.getOne);
-app.post("/categories", categoriesController.createOne);
-app.delete("/categories/:id", categoriesController.deleteOne);
-app.patch("/categories/:id", categoriesController.patchOne);
-app.put("/categories/:id", categoriesController.updateOne);
-
-const tagsController = new TagsController();
-app.get("/tags", tagsController.getAll);
-app.get("/tags/:id", tagsController.getOne);
-app.post("/tags", tagsController.createOne);
-app.delete("/tags/:id", tagsController.deleteOne);
-app.patch("/tags/:id", tagsController.patchOne);
-app.put("/tags/:id", tagsController.updateOne);
-
-// app.use(
-//   (
-//     err: any,
-//     req: express.Request,
-//     res: express.Response,
-//     next: express.NextFunction
-//   ) => {
-//     console.error(err.stack);
-//     res.status(500).send("Something broke!");
-//   }
-// );
-
-app.listen(port, async () => {
-  const time = new Date().toString();
+const start = async () => {
   await dataSource.initialize();
-  console.log(`Server ready on http://localhost:${port} 👽`);
-  console.log(`at: ${time}`);
-});
+  const schema = await buildSchema({
+    resolvers: [TagsResolver, CocktailResolver, CategoryResolver],
+    // authChecker: customAuthChecker,
+  });
+
+  const app = express();
+  const httpServer = http.createServer(app);
+
+  const server = new ApolloServer<ContextType>({
+    schema,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  });
+  await server.start();
+  app.use(
+    "/",
+    cors<cors.CorsRequest>({
+      credentials: true,
+      origin: "http://localhost:3000",
+    }),
+    express.json({ limit: "50mb" }),
+    expressMiddleware(server, {
+      context: async (args) => {
+        return {
+          req: args.req,
+          res: args.res,
+        };
+      },
+    })
+  );
+
+  await new Promise<void>((resolve) =>
+    httpServer.listen({ port: 5000 }, resolve)
+  );
+  console.log(`🚀 Server ready at http://localhost:5000/`);
+};
+
+start();

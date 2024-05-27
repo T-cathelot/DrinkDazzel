@@ -17,7 +17,7 @@ CREATE TABLE category (
 )
 
 -- Cocktails avec leurs tags correspondants
-INSERT INTO Cocktail (name, description, ingredients, categoryId, imgUrl) VALUES
+INSERT INTO Cocktail (name, description, ingredients, categoriesId, imgUrl) VALUES
 ('Blue Lagoon 🌊', 'A vibrant and refreshing cocktail reminiscent of a tropical paradise, featuring blue curaçao, vodka, and lemonade.', '1.5 oz vodka, 1 oz blue curaçao, 4 oz lemonade, Lemon slice for garnish, Ice cubes', 1, 'https://img.freepik.com/photos-gratuite/cocktail-azur-table_140725-3974.jpg?t=st=1713876099~exp=1713879699~hmac=55ae69250577bf5776dfb45853d614a233435a171288e3a5557fc44470a5db6c&w=360'),
 ('Mojito', 'A classic cocktail made with white rum, mint, lime, sugar, and soda water.', '2 oz white rum, 1/2 oz lime juice, 1/2 oz simple syrup, 8 fresh mint leaves, Soda water, Ice cubes', 1, 'https://img.freepik.com/photos-gratuite/caipirinha-savoureuse-angle-eleve-citron-vert_23-2149451549.jpg?t=st=1713876440~exp=1713880040~hmac=800b1db216d43f215dfe1cb752e422759bf2dcba4269065743f5047e73841588&w=360'),
 ('Virgin Mojito', 'A non-alcoholic version of the classic Mojito, with a refreshing blend of mint, lime, and soda water.', 'Fresh mint leaves, 1 lime, 2 tsp sugar, Soda water, Ice cubes', 2, 'https://img.freepik.com/photos-gratuite/caipirinha-savoureuse-angle-eleve-fraises_23-2149451525.jpg?t=st=1713876475~exp=1713880075~hmac=a9b1a9bb4a0cf95060aff5aa8f140db99a51ab73405f0b1a74f21310995af94b&w=360'),
@@ -72,7 +72,7 @@ INSERT INTO tag (name) VALUES
 
 
 -- Tags associés aux cocktails
-INSERT INTO Cocktails_by_Tags (cocktailId, tagId) VALUES
+INSERT INTO Cocktail_tags_tag (cocktailId, tagId) VALUES
 (1, 2), (1, 1), (1, 3), -- Blue Lagoon (vodka, blue curaçao, lemonade)
 (2, 1), (2, 4), (2, 5), (2, 6), -- Mojito (vodka, mint, lime, soda water)
 (3, 4), (3, 5), -- Virgin Mojito (mint, lime, soda water)
